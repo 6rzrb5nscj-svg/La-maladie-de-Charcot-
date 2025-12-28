@@ -1,0 +1,554 @@
+\documentclass[a4paper, 12pt, twoside]{article}
+
+% Encodage et langue
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{lmodern}
+
+% Marges
+\usepackage[top=2.5cm, bottom=2cm, left=3cm, right=2.5cm, headheight=15pt]{geometry}
+
+% Images et arrière-plan
+\usepackage{graphicx}
+\usepackage{eso-pic}
+
+% Tableaux
+\usepackage{array}
+
+% Hyperliens
+\usepackage{hyperref}
+
+% Justification du texte
+\usepackage{ragged2e}
+
+% Pour le code Python
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Définition du style Python
+\lstdefinestyle{python}{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black}\itshape,
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=5pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{black},
+}
+
+\input{pagedegarde}
+
+
+\title{La maladie de Charcot (SLA)}
+\entreprise{Le nom de votre entreprise}
+\datedebut{15 septembre 2025}
+\datefin{6 janvier 2026}
+
+
+\membrea{Vural Rozerin 42010218 }
+\membreb{Geffroy Clara 45003003}
+
+
+
+\begin{document}
+\pagedegarde
+\section*{Remerciements}
+Merci à Valentin BOUQUET pour sa précieuse aide lors de nos différents travaux dirigés. 
+\newpage
+
+\tableofcontents
+\newpage
+
+
+\clearpage
+\section{Introduction}
+
+
+Aujourd’hui, la sclérose latérale amyotrophique (SLA) représente un enjeu majeur de santé publique. En France, on recense environ cinq nouveaux diagnostics par jour, mais également cinq décès quotidiens liés à cette maladie. L’espérance de vie moyenne après le diagnostic est estimée entre trois et cinq ans, et l’ARSLA prévoit une augmentation du nombre de cas d’environ 20\,\% d’ici 2040.
+
+\vspace{0.5cm}
+
+La maladie de Charcot, communément appelée SLA (sclérose latérale amyotrophique), est une maladie neurologique rare et progressive qui touche sélectivement les systèmes moteurs. Elle est caractérisée par une dégénérescence, c’est-à-dire une mort cellulaire, des motoneurones dits « centraux » et « périphériques », responsables de la commande des muscles volontaires. Cette dégénérescence entraîne une perte progressive de la motricité.
+
+\vspace{0.5cm}
+
+La SLA apparaît généralement entre 50 et 70 ans et peut prendre différentes formes cliniques. Elle peut débuter soit au niveau du tronc cérébral, provoquant des difficultés à articuler ou à déglutir, soit au niveau des motoneurones périphériques, se traduisant par une faiblesse ou une gêne dans un membre supérieur ou inférieur. La maladie s’intensifie ensuite progressivement, avec l’apparition de contractures, de raideurs musculaires et articulaires, une perte de masse musculaire, ainsi que des troubles croissants de la coordination, de la marche, de l’élocution et de la déglutition.
+
+\vspace{0.5cm}
+
+À l’heure actuelle, l’origine de la SLA demeure complexe et encore largement inconnue. Environ 10\,\% des cas sont d’origine génétique, tandis que les 90\,\% restants sont qualifiés de cas dits « sporadiques », c’est-à-dire sans cause clairement identifiée. Bien que plusieurs pistes de recherche existent, aucune hypothèse n’a encore été totalement validée. Il n’existe par ailleurs aucun traitement curatif de la maladie de Charcot. La prise en charge repose principalement sur des soins visant à soulager les symptômes et à améliorer la qualité de vie du patient, notamment par la kinésithérapie, l’orthophonie ou le soutien psychologique. L’utilisation de la ventilation non invasive (VNI), lorsque la fonction respiratoire commence à décliner, ainsi que la prescription de riluzole, permettent une amélioration modérée de l’espérance de vie.
+
+\vspace{0.5cm}
+
+La maladie de Charcot représente l’un des plus grands défis pour les équipes médicales, en particulier en raison de l’imprévisibilité de son évolution. Certains patients connaissent une dégradation rapide de leur état, tandis que d’autres conservent leurs capacités fonctionnelles sur une période plus longue. Cette variabilité interindividuelle complique la prise de décision médicale, notamment lorsqu’il s’agit de choisir entre la poursuite de traitements lourds visant à ralentir l’évolution de la maladie et à prolonger la survie, ou l’orientation vers une prise en charge davantage axée sur le confort et la qualité de vie. En l’absence de repères clairs, l’adaptation du suivi peut s’avérer difficile, conduisant parfois à une prise en charge moins optimale pour le patient.
+
+\vspace{0.5cm}
+
+Face à cette problématique, nous avons choisi de consacrer notre projet à la conception d’un outil informatique capable d’analyser différents indicateurs cliniques, tels que l’âge du patient ou la vitesse de progression de la perte de motricité, afin d’estimer la probabilité de survie. À partir de ces données, l’outil génère une recommandation générale~:
+\begin{itemize}
+    \item poursuivre le traitement lorsque la probabilité de survie à moyen terme apparaît relativement élevée~;
+    \item privilégier le confort et le bien-être du patient lorsque l’évolution de la maladie semble rapide et défavorable.
+\end{itemize}
+
+Cet outil n’a pas vocation à remplacer le jugement médical, mais à servir de support à la décision afin d’accompagner le médecin dans l’élaboration d’un suivi adapté et personnalisé.
+
+
+\clearpage
+\section{Environnement de travail}
+
+Le principal travail a été effectué lors de nos séances de travaux dirigés avec nos propres machines, nous étions ensemble pour avancer, à chaque fois sinon nous continuions chez nous. Au début des séances nous faisions un point sur l'où on était, ce que nous allions faire durant la séance, et le chargé de travaux dirigés venait nous poser des questions et nous aider afin de parfaire notre raisonnement. A la fin de la séance, nous regardions ce que nous avions fait, en prenant du recul, et de voir ce qu'il n'allait pas, et ce qu'il allait afin de voir notre avancement. 
+
+\clearpage
+\section{Description du projet et objectifs}
+\subsection{L'ambition de notre projet}
+
+Dans un premier temps, nous avons récupéré la base de données qui nous a permis par la suite d’entraîner un modèle pour effectuer la prédiction de la survie à 1 an d’un patient.
+
+\vspace{0.5cm}
+
+Dans un deuxième temps, après avoir analysé attentivement la base de données, nous avons sélectionné les variables essentielles pour la prédiction. Les variables retenues sont : le genre, l’âge, le poids, la taille, les 10 questions concernant l’ALSFRS-R (niveau de parole, de salivation, etc.), la localisation initiale des symptômes (bulbaire ou spinal), la capacité vitale forcée et enfin, la date d’apparition des symptômes. À partir de ces variables, nous avons développé un site internet via Streamlit permettant au spécialiste d’enregistrer toutes les données concernant son patient et d’obtenir automatiquement la prédiction.
+
+\vspace{0.5cm}
+
+Dans un troisième temps, nous avons utilisé la base de données pour entraîner un modèle capable de prédire la survie à 1 an. Le modèle apprend automatiquement à partir des données existantes quelles variables sont les plus pertinentes (âge, genre, scores ALSFRS-R, etc.), constituant ainsi les \textit{features}. Nous avons choisi le modèle \textit{Gradient Boosting Classifier}, un algorithme d’apprentissage automatique par ensemble qui construit des arbres de décision de manière séquentielle, chaque nouvel arbre corrigeant les erreurs des arbres précédents. Le modèle a été entraîné sur 80\% des données et testé sur les 20\% restantes afin d’évaluer la fiabilité des prédictions. En entrée, le modèle utilise une combinaison des 14 facteurs cliniques précédemment mentionnés.
+
+\vspace{0.5cm}
+
+Le Gradient Boosting construit plusieurs arbres de décision, qui fonctionnent comme un organigramme de questions binaires destiné à classer un patient selon sa survie (moins ou plus d’un an). Chaque arbre part d’un nœud racine contenant toutes les données, puis pose séquentiellement la question la plus pertinente statistiquement sur une caractéristique clinique (ex. : "L’âge est-il supérieur à 65 ans ?"). Ce processus se poursuit jusqu’aux nœuds feuilles, chaque patient étant assigné à la classe de survie majoritaire dans la feuille correspondante. La combinaison des prédictions de tous les arbres constitue la prédiction finale du modèle.
+
+\vspace{0.5cm}
+
+Nous avons également testé différents modèles afin de sélectionner celui offrant la meilleure précision. Le \textit{Gradient Boosting} est un ensemble d’arbres robuste et performant, même sur des données complexes, et améliore les prédictions en corrigeant les erreurs arbre par arbre, sous réserve d’un réglage approprié de ses paramètres. La régression logistique est simple, rapide et facile à interpréter, mais fonctionne uniquement pour des relations linéaires. Enfin, le \textit{SVM} avec noyau RBF est efficace sur des données non linéaires, mais sensible aux paramètres et plus lent à exécuter.
+
+
+    \clearpage
+	\subsection{La stratégie}
+
+Dans un premier temps, nous avons récupéré la base de données, qui nous a permis par la suite d’entraîner un modèle pour prédire la survie à 1 an d’un patient.
+
+\vspace{0.5cm}
+
+Dans un deuxième temps, après avoir analysé attentivement la base de données, nous avons sélectionné les variables essentielles pour la prédiction. Les variables retenues sont : le genre, l’âge, le poids, la taille, les 10 questions de l’ALSFRS-R (niveau de parole, de salivation, etc.), la localisation initiale des symptômes (bulbaire ou spinal), la capacité vitale forcée et enfin la date d’apparition des symptômes. À partir de ces variables, nous avons développé un site internet via Streamlit, permettant au spécialiste d’enregistrer toutes les données concernant son patient et d’obtenir automatiquement la prédiction.
+
+\vspace{0.5cm}
+
+Dans un troisième temps, nous avons utilisé la base de données pour entraîner un modèle capable de prédire la survie à 1 an. Le modèle apprend automatiquement, à partir des données existantes, quelles variables sont les plus pertinentes (âge, genre, scores ALSFRS-R, etc.), constituant ainsi les \textit{features}. Nous avons choisi le modèle \textit{Gradient Boosting Classifier}, un algorithme d’apprentissage automatique par ensemble qui construit plusieurs arbres de décision de manière séquentielle, chaque nouvel arbre corrigeant les erreurs des arbres précédents. Le modèle a été entraîné sur 80\% des données et testé sur les 20\% restantes afin d’évaluer la fiabilité des prédictions. En entrée, le modèle utilise une combinaison des 14 facteurs cliniques présentés précédemment, incluant les données démographiques, les mesures cliniques et les sous-scores ALSFRS-R.
+
+\vspace{0.5cm}
+
+Le Gradient Boosting construit plusieurs arbres de décision, qui fonctionnent comme un organigramme de questions binaires destiné à classer un patient selon sa survie (moins ou plus d’un an). Chaque arbre part d’un nœud racine contenant toutes les données, puis pose séquentiellement la question la plus pertinente statistiquement sur une caractéristique clinique (ex. : "L’âge est-il supérieur à 65 ans ?"). Ce processus se poursuit jusqu’aux nœuds feuilles, chaque patient étant assigné à la classe de survie majoritaire dans la feuille correspondante. La combinaison des prédictions de tous les arbres constitue la prédiction finale du modèle.
+
+\vspace{0.5cm}
+
+Nous avons également testé différents modèles afin de sélectionner celui offrant la meilleure précision. Le \textit{Gradient Boosting} est robuste et performant, même sur des données complexes, et améliore les prédictions en corrigeant les erreurs arbre par arbre, sous réserve d’un réglage approprié des paramètres. La régression logistique est simple, rapide et facile à interpréter, mais fonctionne uniquement pour des relations linéaires. Enfin, le \textit{SVM} avec noyau RBF est efficace sur des données non linéaires, mais sensible aux paramètres et plus lent à exécuter.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{bestmodel.png}
+    \caption{Résultat du test sur les différents modèles}
+    \label{fig:bestmodel}
+\end{figure}
+
+
+
+\clearpage
+\section{Bibliothèques, Outils et technologies}
+
+\subsection{Bibliothèques principales}
+
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Bibliothèque} & \textbf{Usage principal} \\
+\hline
+pandas & Manipulation et traitement des données (\texttt{DataFrame}, lecture Excel, encodage). \\
+\hline
+joblib & Sauvegarde et chargement des modèles entraînés (\texttt{.pkl}). \\
+\hline
+scikit-learn (sklearn) & Machine Learning et métriques. Modules utilisés :
+\begin{itemize}
+    \item \texttt{model\_selection} : \texttt{train\_test\_split}
+    \item \texttt{metrics} : \texttt{accuracy\_score}, \texttt{precision\_score}, \texttt{recall\_score}, \texttt{f1\_score}, \texttt{roc\_auc\_score}
+    \item \texttt{ensemble} : \texttt{RandomForestClassifier}, \texttt{GradientBoostingClassifier}
+    \item \texttt{linear\_model} : \texttt{LogisticRegression}
+    \item \texttt{svm} : \texttt{SVC}
+\end{itemize} \\
+\hline
+streamlit & Création de l’interface web interactive : formulaires, sliders, boutons, affichage des résultats. \\
+\hline
+\end{tabular}
+
+\subsection{Bibliothèques auxiliaires}
+
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Bibliothèque} & \textbf{Usage principal} \\
+\hline
+openpyxl & Lecture des fichiers Excel (\texttt{.xlsx}) avec pandas. \\
+\hline
+Python standard libraries & Modules intégrés pour la gestion des fichiers et chemins (\texttt{os}, \texttt{sys}) si besoin. \\
+\hline
+\end{tabular}
+
+\subsection{Installation rapide}
+
+Pour installer toutes les bibliothèques nécessaires :
+
+\begin{verbatim}
+pip install pandas scikit-learn openpyxl joblib streamlit
+\end{verbatim}
+
+
+\clearpage
+\section{Travail réalisé}
+
+Le programme sur lequel nous avons travaillé permet : 
+
+\subsection{Saisie des informations patient}
+\begin{itemize}
+    \item Données démographiques :
+    \begin{itemize}
+        \item Âge (\texttt{Age})
+        \item Poids (\texttt{Weight})
+        \item Taille (\texttt{Height})
+        \item Sexe (\texttt{Gender})
+    \end{itemize}
+\end{itemize}
+
+\subsection{Saisie des scores ALSFRS-R}
+\begin{itemize}
+    \item Les 10 sous-scores sont saisis via des sliders (0 = fonction sévèrement altérée, 4 = fonction normale) :
+    \begin{itemize}
+        \item \texttt{Q1 Speech} : Parole
+        \item \texttt{Q2 Salivation} : Salivation
+        \item \texttt{Q3 Swallowing} : Déglutition
+        \item \texttt{Q4 Handwriting} : Écriture
+        \item \texttt{Q5 Cutting} : Découpage des aliments
+        \item \texttt{Q6 Dressing and Hygiene} : Habillage et hygiène
+        \item \texttt{Q7 Turning in Bed} : Se retourner dans le lit
+        \item \texttt{Q8 Walking} : Marche
+        \item \texttt{Q9 Climbing Stairs} : Monter les escaliers
+        \item \texttt{Q10 Respiratory} : Fonction respiratoire
+    \end{itemize}
+\end{itemize}
+
+\subsection{Saisie des mesures cliniques}
+\begin{itemize}
+    \item Capacité vitale forcée (\texttt{Forced Vital Capacity}) : 0–7
+    \item Durée des symptômes (\texttt{Symptom Duration}) : en mois
+\end{itemize}
+
+\subsection{Prédiction de survie}
+\begin{itemize}
+    \item Création automatique d'un \texttt{DataFrame} compatible avec le modèle Gradient Boosting.
+    \item Encodage des variables (\texttt{Gender}).
+    \item Ajout des colonnes manquantes pour correspondre au modèle entraîné.
+    \item Calcul :
+    \begin{itemize}
+        \item Classe prédite (0 ou 1)
+        \item Probabilité de survie à 1 an
+    \end{itemize}
+\end{itemize}
+
+\subsection{Affichage des résultats}
+\begin{itemize}
+    \item Probabilité de survie affichée avec code couleur :
+    \begin{itemize}
+        \item < 33\% : rouge (faible chance de survie)
+        \item 33–66\% : orange (chance modérée)
+        \item > 66\% : vert (forte chance)
+    \end{itemize}
+    \item Affichage d’un label explicatif et de la probabilité en pourcentage.
+\end{itemize}
+
+\subsection{Interface utilisateur}
+\begin{itemize}
+    \item Formulaire interactif (\texttt{st.form}) pour saisir toutes les informations.
+    \item Note explicative permanente sur le fonctionnement des scores ALSFRS-R.
+    \item Design simple et clair, adapté à une utilisation clinique.
+\end{itemize}
+
+\subsection{Avertissement médical}
+\begin{itemize}
+    \item Affiche un avertissement rappelant que le modèle est un \textbf{outil d’aide à la décision} et \textbf{ne remplace pas un avis médical professionnel}.
+\end{itemize}
+
+\subsection{Répartition des tâches}
+\begin{itemize}
+    \item Ce projet a été réalisé à deux. Nous avons travaillé ensemble sur l’ensemble des étapes, de la préparation à la réalisation. Les idées, les choix et le travail ont été faits en commun, sans répartition fixe des tâches, avec un investissement équivalent de chacune.
+\end{itemize}
+    
+
+\clearpage
+
+\section{Comment l’IA nous a aidées}
+
+Pour ce projet, nous avons été assistés par l’intelligence artificielle. Nous avons dans un premier temps créé un site avec Streamlit, ce qui nous a permis d’avoir une interface simple dans laquelle on peut entrer toutes les informations concernant le patient, telles que l’âge, les antécédents ou encore les résultats d’analyses. Ensuite, le site prédit la survie à un an du patient, affichée avec un code couleur facilitant la compréhension : vert = forte chance de survie, orange = chance moyenne et rouge = faible chance.
+\vspace{0.5cm}
+L’intelligence artificielle a aussi servi à entraîner notre modèle sur les données. On a utilisé un \textbf{Gradient Boosting Classifier}, qui est capable de repérer des liens complexes entre les 14 variables que l’on a choisies. On a divisé notre base de données en deux : 80~\% pour entraîner le modèle et 20~\% pour tester qu’il fonctionne bien sur des données qu’il n’a jamais vues, afin d’assurer une certaine précision. Grâce à l’intelligence artificielle, on a pu essayer plusieurs modèles différents, comme le Random Forest, la régression logistique ou le SVM, et comparer leurs performances pour savoir lequel était le plus fiable pour prédire la survie à un an, le Gradient Boosting restant le plus fiable.
+\vspace{0.5cm}
+Pour être sûrs que notre modèle donnait des résultats cohérents, on a même ajouté une ligne de données fictive. Cela nous a permis de vérifier la précision des prédictions et de voir si le modèle se comportait correctement. L’intelligence artificielle a permis d’automatiser les calculs, de tester différentes approches et de présenter des résultats clairs et facilement utilisables par un médecin.
+
+\clearpage
+\section{Difficultés rencontrées}
+Tout au long du projet,  nous avons été confrontés à plusieurs défis qui ont nécessité de réfléchir à des solutions adaptées. Ces difficultés étaient parfois techniques, parfois organisationnelles, mais nous ont permis d’apprendre et de nous améliorer au fur et à mesure. 
+
+\vspace{0.5cm}
+
+Dès les premières étapes, nous avons rencontré des difficultés à bien cerner les objectifs attendus et le niveau de détails requis. De plus, nous avions une base de données dans laquelle on ne comprenait pas la totalité des données, ainsi nous nous y sommes penchés afin de toutes les comprendre, et de pouvoir réaliser le projet aux mieux, nous nous devions de nous assurer de la compréhension de celles-ci et de leurs fiabilités. Nous avons également dû vérifier la façon dont nous devons interpréter ces données dans notre prompt afin de vérifier les éventuels faits. Cette étape a été indispensable pour garantir la rigueur et la pertinence des résultats présentés dans le cadre de notre projet.
+
+\vspace{0.5cm}
+
+Nous avons également eu des difficultés à mettre en place les différents outils nécessaires au projet, en particulier l’installation des bibliothèques Python (streamlit, panda, joblib) ont requièrent du temps en raison de la gestion des dépendances, des versions spécifiques et des conflits éventuels entre les packages. 
+
+De plus, nous avons eu des difficultés sur la base de données, c’est sans doute le point le plus compliqué du projet, quelles variables nous devions prendre, quel modèle serait le plus performant, au final quelle stratégie devons nous mettre en place afin d’atteindre notre objectif, tout en vérifiant que les variables utilisées étaient manipulées correctement. 
+
+\vspace{0.5cm}
+
+Malgré ces difficultés, cette phase a été formatrice, car elle nous a permis de mieux comprendre le fonctionnement des outils utilisés, de renforcer nos compétences pratiques en gestion d’environnements Python et de garantir le bon fonctionnement de notre projet.
+
+\clearpage
+\section{Bilan}
+    
+	\subsection{Conclusion}
+La réalisation de ce projet n’a pas été simple, et a demandé beaucoup d’efforts pour surmonter certains problèmes mais nous y sommes parvenus, nous avons réussi à construire une plateforme sur laquelle le médecin peut enregistrer les données concernant le patient, et obtient en réponse une aide à sa prise de décision sur la suite du traitement à proposer au patient. 
+
+\vspace{0.5cm}
+
+Ce projet nous a appris à mettre en place une stratégie correcte, qui nous a permis par la suite de suivre cette ligne directive tout au long de notre travail, mais aussi de vérifier à chaque fois notre code qui a pu être généré par l’intelligence artificielle afin d’avoir le meilleur programme. Il nous a également permis de nous confronter à certains problèmes, que nous avons dû apprendre à résoudre tout en ayant un sujet attrayant. 
+
+\vspace{0.5cm}
+
+De plus, ce projet nous a permis de mieux comprendre l’importance des données pour aider le médecin dans ses décisions. Nous avons vu que l’intelligence artificielle ne remplace pas le médecin, mais peut rendre l’analyse des informations plus facile et le suivi du patient plus clair. Enfin, ce travail nous a aidé à progresser en programmation et en organisation de projet, tout en nous apprenant à vérifier et améliorer notre code étape par étape.
+    \clearpage
+	\subsection{Perspectives}
+
+Après cette première version de notre projet, plusieurs axes d'amélioration et de développement sont possibles :
+
+\vspace{0.5cm}
+
+1. Amélioration des modèles : Ajouter davantage de données pour augmenter la fiabilité des modèles.
+
+\vspace{0.5cm}
+
+2. Développement de l'application : Permettre à l'utilisateur de sauvegarder ou d'exporter les résultats de prédiction.
+
+\vspace{0.5cm}
+
+3. Développement de l'application : Créer un tableau de suivi des patients pour gérer les différentes prédictions.
+
+\vspace{0.5cm}
+
+4.. Explicabilité des prédictions : Fournir une fiche résumé pour le patient, mettant en évidence les facteurs principaux influençant la prédiction.
+
+
+	
+
+
+\newpage
+\section{Bibliographie}
+\renewcommand{\bibname}{}
+\renewcommand{\refname}{}
+\begin{thebibliography}{2}
+   \bibitem[label]{cle} Auteur, TITRE, editeur, annee
+   \bibitem[LAM94]{lam1} L. LAMPORT, {\it \LaTeX : A Document preparation system, Addison-Wesley, 1994}
+\end{thebibliography}
+
+\newpage
+\section{Webographie}
+\begin{thebibliography}{2}
+   \bibitem[ChatGPT]{cat} \url{chatgpt.com}
+\end{thebibliography}
+
+
+\newpage
+\section{Annexes}
+\appendix
+\makeatletter
+\def\@seccntformat#1{Annexe~\csname the#1\endcsname:\quad}
+\makeatother
+	\section{Cahier des charges}
+
+Le but de notre projet est de créer un outil capable de prédire la survie à 1 an des patients atteints de SLA en utilisant des données cliniques. Le cahier des charges définit ce que nous devons faire et les contraintes à respecter.
+
+\subsection*{Objectifs}
+\begin{itemize}
+    \item Récupérer et nettoyer les données des patients.
+    \item Choisir les informations importantes pour la prédiction (âge, genre, poids, taille, scores ALSFRS-R, localisation des symptômes, capacité vitale forcée, etc.).
+    \item Créer un modèle capable de prédire la survie à 1 an.
+    \item Développer une interface simple (avec Streamlit) pour que les médecins puissent entrer les données et obtenir la prédiction.
+\end{itemize}
+
+\subsection*{Contraintes}
+\begin{itemize}
+    \item Les données des patients doivent rester confidentielles.
+    \item L’outil doit être facile à utiliser et rapide.
+    \item Le modèle ne doit pas utiliser trop de variables pour rester pratique.
+\end{itemize}
+
+\subsection*{Ce que l'on veut faire : }
+\begin{itemize}
+    \item La base de données prête à être utilisée pour l’entraînement du modèle.
+    \item Le modèle de prédiction entraîné et évalué.
+    \item L’interface utilisateur fonctionnelle pour saisir les données et voir les résultats.
+    \item Un rapport expliquant ce que nous avons fait et les résultats obtenus.
+\end{itemize}
+
+
+
+    \clearpage
+	\section{Exemple d'exécution du projet}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{lancement.jpg}
+    \caption{Lancement du site}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Site1.png}
+    \caption{Le site, partie 1}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{Site2.png}
+    \caption{Le site, partie 2}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{site3.png}
+    \caption{Le site, partie 3}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{test1.png}
+    \caption{-Patient test, partie 1}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{test2.png}
+    \caption{Patient test, partie 2}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{test3.png}
+    \caption{Patient test, partie 3}
+\end{figure}
+
+
+
+
+
+    \clearpage
+\section{Manuel utilisateur}
+
+\subsection*{Fichier 1 : Entraînement et évaluation multi-modèles (main.py)}
+\justifying
+Ce programme charge les données, prépare les variables, entraîne plusieurs modèles (Logistic Regression, Random Forest, Gradient Boosting, SVM) et sauvegarde le meilleur modèle basé sur le ROC-AUC.
+
+\textbf{Marche à suivre :}
+\begin{enumerate}
+    \item Installer les dépendances :
+\end{enumerate}
+
+\begin{lstlisting}[style=python]
+pip install pandas scikit-learn joblib openpyxl
+\end{lstlisting}
+
+\begin{enumerate}
+    \setcounter{enumi}{1}
+    \item Placer le fichier \texttt{new\_als\_train.xlsx} dans le même dossier que le script.
+    \item Lancer le script Python :
+\end{enumerate}
+
+\begin{lstlisting}[style=python]
+python main.py
+\end{lstlisting}
+
+\begin{enumerate}
+    \setcounter{enumi}{3}
+    \item Le script affiche les scores des modèles et sauvegarde le meilleur modèle dans \texttt{model/best\_model.pkl}.
+\end{enumerate}
+
+% --------------------------------------------------
+
+\subsection*{Fichier 2 : Random Forest simple (train\_model.py)}
+\justifying
+Ce programme entraîne un Random Forest plus simple sur le même dataset et sauvegarde le modèle.
+
+\textbf{Marche à suivre :}
+\begin{enumerate}
+    \item Installer les dépendances (si ce n’est pas déjà fait) :
+\end{enumerate}
+
+\begin{lstlisting}[style=python]
+pip install pandas scikit-learn joblib openpyxl
+\end{lstlisting}
+
+\begin{enumerate}
+    \setcounter{enumi}{1}
+    \item Lancer le script :
+\end{enumerate}
+
+\begin{lstlisting}[style=python]
+python train_rf_simple.py
+\end{lstlisting}
+
+\begin{enumerate}
+    \setcounter{enumi}{2}
+    \item Le script affiche l’accuracy du modèle sur le test set et sauvegarde le modèle dans \texttt{model/rf\_model.pkl}.
+\end{enumerate}
+
+% --------------------------------------------------
+
+\subsection*{Fichier 3 : Application Streamlit (app.py)}
+\justifying
+Cette application permet à un utilisateur de renseigner les informations d’un patient et d’obtenir une prédiction de survie à 1 an.
+
+\textbf{Marche à suivre :}
+\begin{enumerate}
+    \item Installer Streamlit et les dépendances :
+\end{enumerate}
+
+\begin{lstlisting}[style=python]
+pip install streamlit pandas joblib openpyxl
+\end{lstlisting}
+
+\begin{enumerate}
+    \setcounter{enumi}{1}
+    \item Vérifier que le meilleur modèle est bien sauvegardé dans \texttt{model/best\_model.pkl}.
+    \item Lancer l’application :
+\end{enumerate}
+
+\begin{lstlisting}[style=python]
+streamlit run app_streamlit.py
+\end{lstlisting}
+
+\begin{enumerate}
+    \setcounter{enumi}{2}
+    \item Une interface web s’ouvre dans le navigateur pour saisir les informations du patient et obtenir la prédiction.
+\end{enumerate}
+
+
+
+\end{document}
+\end{itemize}
+
+\end{document}
+
+
+
+\end{document}
