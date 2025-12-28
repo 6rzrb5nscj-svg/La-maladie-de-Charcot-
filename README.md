@@ -17,11 +17,9 @@ Le projet permet :
 
 ## Structure du projet
 
-.
-├── data/
-│   └── new_als_train.xlsx
 ├── model/
 │   └── rf_model.pkl
+├── new_als_train.xlsx
 ├── main.py
 ├── app.py
 ├── train_model.py
