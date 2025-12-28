@@ -19,6 +19,7 @@ Le projet permet :
 
 ├── model/
 │   └── rf_model.pkl
+│   └── best_model.pkl
 ├── new_als_train.xlsx
 ├── main.py
 ├── app.py
