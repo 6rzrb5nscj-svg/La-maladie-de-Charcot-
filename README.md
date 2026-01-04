@@ -17,8 +17,9 @@ Le projet permet :
 
 ## Structure du projet
 
+```plaintext
 ├── model/
-│   └── rf_model.pkl
+│   ├── rf_model.pkl
 │   └── best_model.pkl
 ├── new_als_train.xlsx
 ├── main.py
@@ -27,7 +28,6 @@ Le projet permet :
 ├── add_fake_patient.py
 └── README.md
 
----
 
 ## Données
 
