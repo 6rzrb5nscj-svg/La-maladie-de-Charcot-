@@ -26,7 +26,8 @@ Le projet permet :
 ├── app.py
 ├── train_model.py
 ├── add_fake_patient.py
-└── README.md```
+└── README.md
+```
 
 
 ## Données
